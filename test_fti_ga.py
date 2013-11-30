@@ -12,9 +12,10 @@ if __name__ == "__main__":
 	bestFitness = -0x7FFFFFF
 
 	maximumGenerationNum = 10 
-	random.seed(10)
+	random.seed(101)#prev was 10
 	#10 - 157
 	currentBestOutput = open("currentBest" + str(maximumGenerationNum) + ".txt", "w")
+	currentMeanOutput = open("currentMean" + str(maximumGenerationNum) + ".txt", "w")
 	
 
 	instance.generateIndividualList()
@@ -26,15 +27,17 @@ if __name__ == "__main__":
 		instance.rank()
 		currentBest = instance.getBestIndividual()	
 		currentBestOutput.write(str(currentBest.fitness) + "\n")
+		currentMeanOutput.write(str(instance.getAverageFitness()) + "\n")
 		print(currentBest.fitness)
 		if(currentBest.fitness > bestFitness):
 			bestIndividual = currentBest
 			bestFitness = currentBest.fitness
 		instance.select()
 	currentBestOutput.close()
+	currentMeanOutput.close()
 	
 	
-	bestOutput = open("best.txt", "w")
+	bestOutput = open("best" + str(maximumGenerationNum) + ".txt", "w")
 	for i in xrange(intervalNum):
 		bestOutput.write(str(bestIndividual.genes[i].timing) + "\n")
 		bestOutput.write(str(bestFitness))
